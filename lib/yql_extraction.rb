@@ -1,0 +1,2 @@
+class YqlExtracton
+end
