@@ -1,3 +1,4 @@
+require_relative '../test/helpers/test_helper'
 require 'byebug'
 require 'minitest/autorun'
 require 'yql_extraction'
@@ -37,6 +38,21 @@ class YqlExtractionTest < Minitest::Test
       hash_response = JSON.parse(response.body)
       assert_equal Hash, hash_response.class
     end
+  end
+
+  def test_parsing_of_json_data
+    filename = 'yql_response.json'
+    data = ReadTestFile.new(filename).contents
+    arr = @yql.parse_queried_json(data, "query", "results", "quote")
+    assert_equal Array, arr.class
+  end
+
+  def test_extracted_array_returns_volume_data
+    filename = 'yql_response.json'
+    data = ReadTestFile.new(filename).contents
+    arr = @yql.parse_queried_json(data, "query", "results", "quote")
+    volume = @yql.request_arg_data_from arr, "Volume"
+    assert_equal 248, volume.count
   end
 
   def test_maximum_value_returned
