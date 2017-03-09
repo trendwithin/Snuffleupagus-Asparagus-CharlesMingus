@@ -1,0 +1,5 @@
+# exclude VCR Files
+/vcr_cassettes
+
+# exclude byebug history
+.byebug_history
